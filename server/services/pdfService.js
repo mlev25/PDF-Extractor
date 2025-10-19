@@ -5,7 +5,7 @@ const FormData = require('form-data');
 const axios = require('axios'); 
 const { readFile } = require('fs').promises; 
 
-const TEXT_THRESHOLD = 100; 
+const TEXT_THRESHOLD = 100;
 const OCR_API_URL = process.env.DOCSTRANGE_API_URL;
 const OCR_AUTH = process.env.DOCSTRANGE_API_KEY; 
 
@@ -68,9 +68,13 @@ exports.getRawText = async (filePath) => {
         const data = await parser.getText();
         
         rawText = data.text.trim();
+        const ZAJ_REGEX = /-- \d+ of \d+ --|[\s\n\t]+/g;
+        const tisztaSzoveg = rawText.replace(ZAJ_REGEX, '').trim();
         
-        if(rawText.length < TEXT_THRESHOLD) {
-            console.log(`Extracted text length (${rawText.length}) below threshold, falling back to OCR.`);
+        
+        if(tisztaSzoveg.length < TEXT_THRESHOLD) {
+            console.log(`Tiszta szöveg hossza: ${tisztaSzoveg.length}`);
+            console.log(`Extracted text: ${tisztaSzoveg}`);
             rawText = await performOCR(filePath);
         } else {
             console.log(`Successfully extracted text from PDF using pdfParser, length: ${rawText.length}`);
