@@ -30,7 +30,6 @@ const ResultDisplay = ({ data, viewMode }) => {
     if (viewMode === 'json') {
         return (
             <div className="json-container">
-                {/* JSON.stringify: Formázza a JSON objektumot, 2-es indentálással */}
                 <pre>{JSON.stringify(data, null, 2)}</pre>
             </div>
         );

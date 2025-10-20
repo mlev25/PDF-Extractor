@@ -30,6 +30,8 @@ const prompt = `Kérem, a következő termékleírás szövegéből nyerje ki az
 
       1.  **Minden kinyert adatot (terméknév, jellemzők stb.)** kötelezően **fordítson le magyarra**, függetlenül a forrás nyelvétől.
       2.  A kimenet egyetlen JSON objektum legyen, és SOHA ne térjen el a megadott JSON sémától.
+      3.  Ha egy adott mezőre nincs adat a szövegben, akkor az üres stringként ('') vagy üres tömbként ([]) jelenjen meg a JSON-ben.
+      4.  A tápértékek esetében legyen szóköz a szám és az egység között (pl. '239 kcal', '10 g').
       3.  A sémában szereplő **'nyelv'** mező értékeként adja vissza **pontosan a forrásdokumentum eredeti nyelvét** (pl. 'Polish', 'Magyar', 'English'). Ez az egyetlen mező, amit nem szabad lefordítani.
       
       Nyers szöveg a feldolgozáshoz:

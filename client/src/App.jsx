@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import './App.css'
 import ResultDisplay from './components/ResultDisplay.jsx'
+import HelpModal from './components/HelpModal.jsx';
 
 
 function App() {
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [file, setFile] = useState(null);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -29,7 +31,7 @@ function App() {
           navigator.clipboard.writeText(getJsonString()); 
           alert('JSON adatok másolva a vágólapra!');
       } catch (err) {
-          console.error('Copy failed:', err);
+          console.error('Masolas hibaba utokozott:', err);
           alert('Hiba történt a másolás során.');
       }
   };
@@ -88,14 +90,30 @@ function App() {
 
     } catch (err) {
       setLoading(false);
-      setError(`Hiba történt a kérés során: ${err.message}. Ellenőrizd a backendet és a kapcsolatot. (Ne feledd, eltarthat 3-5 percig is!)`);
+      setError(`Hiba történt a kérés során: ${err.message}. Ellenőrizd a kapcsolatot/backendet`);
       console.error('Frontend hiba:', err);
     }
   };
 
   return (
+    <>
+
+      {/* 1. Modal Komponens */}
+      <HelpModal 
+          isOpen={isHelpOpen} 
+          onClose={() => setIsHelpOpen(false)} 
+      />
+
+      {/* 2. Súgó gomb */}
+      <button 
+          className="help-button" 
+          onClick={() => setIsHelpOpen(true)}
+      >
+          ?
+      </button>
+
     <div className="container">
-      <h1>PDF tápérték kinyerő (React)</h1>
+      <h1><b>PDF</b> tápérték kinyerő alkalmazás</h1>
 
       <form onSubmit={handleSubmit} className="upload-section">
         <label htmlFor="pdfFile" className="custom-file-upload">
@@ -108,11 +126,11 @@ function App() {
         </button>
       </form>
 
-      {/* Állapotjelzések: loading és error (v-if / v-show megfelelője) */}
-      {loading && <div className="status-message loading">Feldolgozás folyamatban... Eltarthat akár 1 percig is a nagy fájloknál!</div>}
+      {/* Állapotjelzések*/}
+      {loading && <div className="status-message loading">Feldolgozás folyamatban... Eltarthat akár percekig is a nagy fájloknál!</div>}
       {error && <div className="status-message error">Hiba: {error}</div>}
 
-      {/* Eredmény megjelenítése */}
+      {/* Eredmény */}
       {data && (
         <div className="results-wrapper">
           <h2>Eredmény</h2>
@@ -132,16 +150,17 @@ function App() {
               JSON nézet
             </button>
             
-            {/* Műveleti gombok (mindig a JSON-t használják) */}
+            {/* Műveleti gombok */}
             <button onClick={handleCopyJson} className="action-button copy">Másolás</button>
             <button onClick={handleDownloadJson} className="action-button download">Letöltés (JSON)</button>
           </div>
           
-          {/* A megjelenítő komponens, a jelenlegi nézettel */}
+          {/* A megjelenítő komponens */}
           <ResultDisplay data={data} viewMode={viewMode} /> 
         </div>
       )}
     </div>
+    </>
   );
 
 }
