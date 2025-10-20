@@ -12,7 +12,7 @@ function App() {
   const [error, setError] = useState(null);
   const [viewMode, setViewMode] = useState('formatted');
 
-  const API_URL = "http://localhost:3000/api/process-pdf";
+  const API_URL = 'https://pdf-extractor-production-4253.up.railway.app/api/process-pdf';
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
