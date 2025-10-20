@@ -11,10 +11,10 @@ const OCR_AUTH = process.env.DOCSTRANGE_API_KEY;
 
 async function performOCR(filePath) {
     if (!OCR_AUTH) {
-        console.error("HIBA: Hiányzik az DOCSTRANGE_API_KEY a .env-ből!");
+        console.error("Hiányzik az DOCSTRANGE_API_KEY a .env-ből!");
         return ''; 
     }
-    console.log("-> Natív olvasás sikertelen, Nanonets OCR hívása...");
+    console.log("Natív olvasás sikertelen, Nanonets OCR hívása...");
     
     try {
         const fileBuffer = fs.readFileSync(filePath); 
@@ -74,14 +74,14 @@ exports.getRawText = async (filePath) => {
         
         if(tisztaSzoveg.length < TEXT_THRESHOLD) {
             console.log(`Tiszta szöveg hossza: ${tisztaSzoveg.length}`);
-            console.log(`Extracted text: ${tisztaSzoveg}`);
+            console.log(`Kinyert szöveg: ${tisztaSzoveg}`);
             rawText = await performOCR(filePath);
         } else {
-            console.log(`Successfully extracted text from PDF using pdfParser, length: ${rawText.length}`);
+            console.log(`Sikeresen kinyert szöveg a pdf-parser segítségével, hossza: ${rawText.length}`);
         }
 
     }catch (error) {
-        console.error(`Error reading PDF file: ${error.message}. Falling back to OCR.`);
+        console.error(`Hiba a fajl olvasasa soran: ${error.message}. Visszateres OCR-hez.`);
         rawText = await performOCR(filePath);
     } finally {
         if (parser) {

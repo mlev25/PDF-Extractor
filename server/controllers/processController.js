@@ -16,15 +16,15 @@ exports.processPdf = async (req, res) => {
             }
             
             const structuredData = await llmService.extractDataFromText(rawText);
-            console.log("Structured Data Extracted:", structuredData);
+            console.log("Strukturalt adat kinyerve:", structuredData);
             res.json({ success: true, data: structuredData });
       } catch (error) {
-            console.error('Processing error:', error.message);
+            console.error('Feldolgozasi hiba:', error.message);
             res.status(500).json({ error: 'Belső szerverhiba a feldolgozás során.' });
       } finally {
             if (fs.existsSync(filePath)) {
                   fs.unlinkSync(filePath);
-                  console.log(`Fájl törölve: ${filePath}`);
+                  console.log(`Fajl törölve: ${filePath}`);
             }
       }
 

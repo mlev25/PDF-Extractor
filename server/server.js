@@ -22,6 +22,6 @@ app.listen(PORT, () => {
     console.log(`Backend server running on port ${PORT}`);
     console.log(`Endpoint: http://localhost:${PORT}/api/process-pdf`);
     console.log(`---------------------------------\n`);
-    console.log(`✅ Gemini Key Status: ${!!process.env.LLM_API_KEY ? 'OK' : 'MISSING'}`);
-    console.log(`✅ OCR Key Status: ${!!process.env.DOCSTRANGE_API_KEY ? 'OK' : 'MISSING'}`);
+    console.log(`Gemini Key Status: ${!!process.env.LLM_API_KEY ? 'OK' : 'MISSING'}`);
+    console.log(`OCR Key Status: ${!!process.env.DOCSTRANGE_API_KEY ? 'OK' : 'MISSING'}`);
 });
